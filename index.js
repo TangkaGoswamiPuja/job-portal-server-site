@@ -30,11 +30,19 @@ async function run() {
 
 const jobCollection = client.db ("job_hunter").collection('allJobs')
 
+app.post('/allJobs', async (req, res) => {
+    const adding = req.body;
+    console.log( adding);
+     const result = await jobCollection.insertOne(adding);
+     res.send(result);
+  })
+
 app.get("/allJobs",async(req,res)=>{
     const cursor = jobCollection.find();
     const result = await cursor.toArray();
     res.send(result);
 })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
