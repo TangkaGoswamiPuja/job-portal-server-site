@@ -38,7 +38,12 @@ app.post('/allJobs', async (req, res) => {
   })
 
 app.get("/allJobs",async(req,res)=>{
-    const cursor = jobCollection.find();
+    console.log(req.query.email)
+    let query = {};
+    if(req.query?.email){
+        query={email : req.query.email}
+    }
+    const cursor = jobCollection.find(query);
     const result = await cursor.toArray();
     res.send(result);
 })
