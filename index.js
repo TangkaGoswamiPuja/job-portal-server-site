@@ -48,17 +48,38 @@ app.get("/allJobs",async(req,res)=>{
     res.send(result);
 })
 
-// app.get('/alljobs/:id' ,async(req,res)=>{
-//     const id = req.params.id;
-//     const query = {_id: new ObjectId(id)};
-// const result= await jobCollection.findOne(query);
-// res.send(result);
-// })
+app.get('/alljobs/:id' ,async(req,res)=>{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+const result= await jobCollection.findOne(query);
+res.send(result);
+})
+app.put('/allJobs/:id',async(req,res)=>{
+    const id = req.params.id;
+    const filter = {_id: new ObjectId(id)};
+const options = {upsert : true};
+const updateJob = req.body;
+const upJob = {
+//     $set:{
+//         image    :updateJob. image ,
+//     jobTitle     :updateJob.jobTitle ,
+//     jobCategory  :updateJob. jobCategory ,
+//     description  :updateJob. description,
+//     salaryRange  :updateJob.salaryRange  ,
+//  applicantsNumber:updateJob.applicantsNumber,
+//  postingDate     :updateJob.postingDate,
+//         deadline :updateJob. deadline,
+//         email    :updateJob. email ,
+//     user_name:updateJob. user_name
+//     }
+}
+const result=await jobCollection.updateOne(filter,upJob,options);
+res.send(result);
+})
 
 app.delete('/allJobs/:id',async(req,res)=>{
     const id = req.params.id;
     const query = {_id: new ObjectId(id)};
-    console.log("hit",query)
 const result=await jobCollection.deleteOne(query);
 res.send(result);
 })
