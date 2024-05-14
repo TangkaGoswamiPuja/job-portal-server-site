@@ -60,18 +60,18 @@ app.put('/allJobs/:id',async(req,res)=>{
 const options = {upsert : true};
 const updateJob = req.body;
 const upJob = {
-//     $set:{
-//         image    :updateJob. image ,
-//     jobTitle     :updateJob.jobTitle ,
-//     jobCategory  :updateJob. jobCategory ,
-//     description  :updateJob. description,
-//     salaryRange  :updateJob.salaryRange  ,
-//  applicantsNumber:updateJob.applicantsNumber,
-//  postingDate     :updateJob.postingDate,
-//         deadline :updateJob. deadline,
-//         email    :updateJob. email ,
-//     user_name:updateJob. user_name
-//     }
+    $set:{
+        image    :updateJob. image ,
+    jobTitle     :updateJob.jobTitle ,
+    jobCategory  :updateJob. jobCategory ,
+    description  :updateJob. description,
+    salaryRange  :updateJob.salaryRange  ,
+ applicantsNumber:updateJob.applicantsNumber,
+ postingDate     :updateJob.postingDate,
+        deadline :updateJob. deadline,
+        email    :updateJob. email ,
+    user_name:updateJob. user_name
+    }
 }
 const result=await jobCollection.updateOne(filter,upJob,options);
 res.send(result);
