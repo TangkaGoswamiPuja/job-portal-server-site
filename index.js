@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId} = require('mongodb');
 require('dotenv').config()
 const app = express ();
 const port = process.env.PORT|| 5000;
@@ -43,11 +43,25 @@ app.get("/allJobs",async(req,res)=>{
     if(req.query?.email){
         query={email : req.query.email}
     }
-    const cursor = jobCollection.find(query);
-    const result = await cursor.toArray();
+ const result = await
+    jobCollection.find(query).toArray();
     res.send(result);
 })
 
+// app.get('/alljobs/:id' ,async(req,res)=>{
+//     const id = req.params.id;
+//     const query = {_id: new ObjectId(id)};
+// const result= await jobCollection.findOne(query);
+// res.send(result);
+// })
+
+app.delete('/allJobs/:id',async(req,res)=>{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    console.log("hit",query)
+const result=await jobCollection.deleteOne(query);
+res.send(result);
+})
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
