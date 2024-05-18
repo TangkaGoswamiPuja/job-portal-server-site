@@ -13,6 +13,7 @@ app.use(
       "https://job-portal-11.web.app",
       "https://job-portal-11.web.app",
       "https://job-portal-11.firebaseapp.com",
+     "http://localhost:5173"
     ],
     credentials: true,
   })
@@ -38,6 +39,7 @@ async function run() {
     // await client.connect();
 
 const jobCollection = client.db ("job_hunter").collection('allJobs')
+const applyCollection = client.db ("job_hunter").collection('apply')
 
 app.post('/allJobs', async (req, res) => {
     const adding = req.body;
@@ -91,6 +93,27 @@ app.delete('/allJobs/:id',async(req,res)=>{
     const query = {_id: new ObjectId(id)};
 const result=await jobCollection.deleteOne(query);
 res.send(result);
+})
+
+
+//  apply 
+
+app.get("/apply",async(req,res)=>{
+  console.log(req.query.email)
+  let query = {};
+  if(req.query?.email){
+      query={email : req.query.email}
+  }
+const result = await
+  applyCollection.find(query).toArray();
+  res.send(result);
+})
+
+app.post("/apply", async(req,res)=>{
+  const apply = req.body;
+  console.log("apply now",apply);
+  const result = await applyCollection.insertOne(apply);
+     res.send(result);
 })
 
     // Send a ping to confirm a successful connection
